@@ -1,3 +1,0 @@
-cali,15:01,cucuta,18:01
-ibague,6:17,caqueta,11:17
-medellin,12:31,cali,24:34

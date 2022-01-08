@@ -1,4 +1,0 @@
-FF8,1,5,bogota-cali,pedro
-AJH4,23,4,cali-cucuta,junnior
-AJH45,30,8,bogota-cucuta,diego
-GGIR8,15,8,bogota-cucuta,junnior
