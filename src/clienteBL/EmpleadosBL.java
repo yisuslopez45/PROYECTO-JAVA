@@ -94,8 +94,24 @@ public class EmpleadosBL {
         }
     }
      
-    
+    public void editarDatoEmpleado(String nombre, String id, String cargo){
+         conexionBD objConexion = new conexionBD();
+         
+         String datos = String.format("UPDATE empleado SET identificacionEM='"+id+"',nombreEM='"+nombre+"',cargoEM='"+cargo+"' WHERE identificacionEM='" + id + "' " );
+
+         objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
         
+    
+    public void eliminarDatoEmpleado(String id){
+        conexionBD objConexion = new conexionBD();
+        String datos = String.format("DELETE FROM empleado WHERE identificacionEM='" + id + "' ");
+
+        objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
+    
         
     
     

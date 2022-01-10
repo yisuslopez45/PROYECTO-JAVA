@@ -82,12 +82,10 @@ public class Menu extends javax.swing.JFrame {
         modeloFL = (DefaultTableModel) jTableFL.getModel();
         modeloRU = (DefaultTableModel) jTableRu.getModel();
 
-       
-        jTableEM.getTableHeader().setFont(new Font("Roboto",Font.CENTER_BASELINE,14)) ;
-        jTableFL.getTableHeader().setFont(new Font("Roboto",Font.CENTER_BASELINE,14)) ;
-        jTableRu.getTableHeader().setFont(new Font("Roboto",Font.CENTER_BASELINE,14)) ;
-        
-        
+        jTableEM.getTableHeader().setFont(new Font("Roboto", Font.CENTER_BASELINE, 14));
+        jTableFL.getTableHeader().setFont(new Font("Roboto", Font.CENTER_BASELINE, 14));
+        jTableRu.getTableHeader().setFont(new Font("Roboto", Font.CENTER_BASELINE, 14));
+
     }
 
     public Menu(JButton Button_guardar, JPanel barra, JPanel buttonAdd, JPanel buttonClose, JPanel buttonMini, JPanel buttonShow, JTextField ciudadDestino, JTextField ciudadOrigen, JComboBox<String> comboConductor, JComboBox<String> comboRuta, JFormattedTextField horadestino, JFormattedTextField horaorigen, JButton jButton1, JButton jButton2, JLabel jLabel1, JLabel jLabel10, JLabel jLabel11, JLabel jLabel12, JLabel jLabel13, JLabel jLabel14, JLabel jLabel15, JLabel jLabel16, JLabel jLabel17, JLabel jLabel18, JLabel jLabel19, JLabel jLabel2, JLabel jLabel3, JLabel jLabel4, JLabel jLabel5, JLabel jLabel6, JLabel jLabel7, JLabel jLabel8, JLabel jLabel9, JPanel jPanel3, JLabel labelingresarBu, JLabel labelingresarEm, JLabel labelingresarRU, JPanel menuShow, JPanel menutodo, JLabel mostrarBu, JLabel mostrarEm1, JLabel mostrarRu, JPanel panelEm, JPanel panelFlo, JPanel panelRu, JTextField txt_cargo, JTextField txt_id, JTextField txtcantidadPasajeros, JTextField txtgalones, JTextField txtnombre, JTextField txtplaca) throws HeadlessException {
@@ -104,7 +102,7 @@ public class Menu extends javax.swing.JFrame {
         //this.horadestino = horadestino;
         //this.horaorigen = horaorigen;
         this.jButton1 = jButton1;
-        
+
         this.jLabel1 = jLabel1;
         this.jLabel10 = jLabel10;
         //this.jLabel11 = jLabel11;
@@ -151,13 +149,10 @@ public class Menu extends javax.swing.JFrame {
         hora11 = Integer.parseInt(hora1);
         hora22 = Integer.parseInt(hora2);
 
-
-
         if (ciudad1.equals("") || ciudad2.equals("")) {
             x1 = true;
 
         }
-
 
         if (ExcepcionesStr(ciudad1) == true || ExcepcionesStr(ciudad2) == true) {
             JOptionPane.showConfirmDialog(null, "Formato incorrecto");
@@ -176,25 +171,22 @@ public class Menu extends javax.swing.JFrame {
         }
 
     }
-    
-    
-    
+
     public void saveRu1() {
         try {
             FileWriter save1 = new FileWriter(rutaRu, true);
             PrintWriter printtxt1 = new PrintWriter(save1);
 
             for (int i = 0; i < listaRuta.size(); i++) {
-                
-                    printtxt1.print(listaRuta.get(i).getCiudadOrigen());
-                    printtxt1.write(",");
-                    printtxt1.print(listaRuta.get(i).getHoraorigen());
-                    printtxt1.write(",");
-                    printtxt1.print(listaRuta.get(i).getCiudaddestino());
-                    printtxt1.write(",");
-                    printtxt1.println(listaRuta.get(i).getHoradestino());
 
-                
+                printtxt1.print(listaRuta.get(i).getCiudadOrigen());
+                printtxt1.write(",");
+                printtxt1.print(listaRuta.get(i).getHoraorigen());
+                printtxt1.write(",");
+                printtxt1.print(listaRuta.get(i).getCiudaddestino());
+                printtxt1.write(",");
+                printtxt1.println(listaRuta.get(i).getHoradestino());
+
             }
 
             printtxt1.close();
@@ -204,12 +196,6 @@ public class Menu extends javax.swing.JFrame {
         }
 
     }
-    
-    
-    
-    
-    
-    
 
     public void saveRu() {
         try {
@@ -287,7 +273,6 @@ public class Menu extends javax.swing.JFrame {
 //            }
 //
 //        }
-
         if (dato.equals("") || name.equals("") || cargo1.equals("")) {
             c = true;
 
@@ -311,163 +296,94 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-  
-
     void mostrarcomboconductor() {
-        
+
         String nombre = "";
         String cargo = "";
         EmpleadosBL objempleado = new EmpleadosBL();
-         comboConductor.removeAllItems();
-        
+        comboConductor.removeAllItems();
+
         try {
 
-                conexionBD objConexion = new conexionBD();
+            conexionBD objConexion = new conexionBD();
 
-                ResultSet resultado = objempleado.mostrarDatoEmpleado();
-                while (resultado.next()) {
-                    
-                    nombre = resultado.getString("nombreEM");
-                    cargo = resultado.getString("cargoEM");
-                  
-                    
+            ResultSet resultado = objempleado.mostrarDatoEmpleado();
+            while (resultado.next()) {
 
-                    if (cargo.equals("conductor")) {
-                       
-                        comboConductor.addItem(nombre);
-                    } 
+                nombre = resultado.getString("nombreEM");
+                cargo = resultado.getString("cargoEM");
+
+                if (cargo.equals("conductor")) {
+
+                    comboConductor.addItem(nombre);
                 }
-            } catch (Exception e) {
-                System.out.println(e);
             }
-       
-    
-      
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 
-    
+    void editarempleado() {
+
+        int fila = jTableEM.getSelectedRow();
+        EmpleadosBL obtempleado = new EmpleadosBL();
+
+        System.out.println("fila: " + jTableEM.getValueAt(fila, 1));
+        conexionBD objConexion = new conexionBD();
+
+        String id = String.valueOf(jTableEM.getValueAt(fila, 1));
+
+        String nombre = String.valueOf(jTableEM.getValueAt(fila, 0));
+        String cargo = String.valueOf(jTableEM.getValueAt(fila, 2));
+        obtempleado.editarDatoEmpleado(nombre, id, cargo);
+
+    }
 
     void mostrarcomboruta() {
-        
-        
+
         String ruta = "";
-        
+
         RutaBL obtrutas = new RutaBL();
-        
-         comboRuta.removeAllItems();
-        
+
+        comboRuta.removeAllItems();
+
         try {
 
-                conexionBD objConexion = new conexionBD();
+            conexionBD objConexion = new conexionBD();
 
-                ResultSet resultado = obtrutas.mostrarDatoRuta();
-                while (resultado.next()) {
-                    
-                    ruta = resultado.getString("ciudadorigenRUT")+"-"+resultado.getString("ciudaddestinoRUT");
-                   
-                    comboRuta.addItem(ruta);
-                  
-                }
-            } catch (Exception e) {
-                System.out.println(e);
+            ResultSet resultado = obtrutas.mostrarDatoRuta();
+            while (resultado.next()) {
+
+                ruta = resultado.getString("ciudadorigenRUT") + "-" + resultado.getString("ciudaddestinoRUT");
+
+                comboRuta.addItem(ruta);
+
             }
-       
-        
-        
-        
-        
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    void eliminarempleado() {
+
+        int fila = jTableEM.getSelectedRow();
+        EmpleadosBL objempleado = new EmpleadosBL();
+        System.out.println("fila: " + jTableEM.getValueAt(fila, 1));
+        conexionBD objConexion = new conexionBD();
+
+        String id = String.valueOf(jTableEM.getValueAt(fila, 1));
+        modeloEM.removeRow(fila);
+
+        objempleado.eliminarDatoEmpleado(id);
+
     }
 
     
 
+  
    
-    
- 
-    
-    
-    
-    
-    
-    
-    
-
-    
- 
-    
-    
-    
-    
-     public void mostrarTablaRu() {
-        Object matris[][] = new Object[listaRuta.size()][4];
-
-        for (int i = 0; i < listaRuta.size(); i++) {
-            matris[i][0] = listaRuta.get(i).getCiudadOrigen();
-            matris[i][1] = listaRuta.get(i).getCiudaddestino();
-            matris[i][2] = listaRuta.get(i).getHoraorigen();
-            matris[i][3] = listaRuta.get(i).getHoradestino();
-        }
-
-        jTableRu.setModel(new javax.swing.table.DefaultTableModel(
-                matris,
-                new Object[]{
-                    "Ciudad Origen", "Ciudad Destino", "Hora Salida", "Hora llegada"}
-        ));
-
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    public void mostrarTablaEm() {
-        Object matris[][] = new Object[listaEmpleado.size()][3];
-
-        for (int i = 0; i < listaEmpleado.size(); i++) {
-            matris[i][0] = listaEmpleado.get(i).getNombre();
-            matris[i][1] = listaEmpleado.get(i).getIdentificacion();
-            matris[i][2] = listaEmpleado.get(i).getCargo();
-        }
-
-        jTableEM.setModel(new javax.swing.table.DefaultTableModel(
-                matris,
-                new Object[]{
-                    "Nombre", "Identificacion", "Cargo"}
-        ));
-
-    }
-
-    public void mostrarTablaFl() {
-        Object matris[][] = new Object[listaFlota.size()][5];
-
-        for (int i = 0; i < listaFlota.size(); i++) {
-            matris[i][0] = listaFlota.get(i).getPlaca();
-            matris[i][1] = listaFlota.get(i).getCapacidad();
-            matris[i][2] = listaFlota.get(i).getGalones();
-            matris[i][3] = listaFlota.get(i).getAsignarRu();
-            matris[i][4] = listaFlota.get(i).getAsignarConductor();
-            
-            //
-        }
-
-        jTableFL.setModel(new javax.swing.table.DefaultTableModel(
-                matris,
-                new Object[]{
-                    "Placa", "Pasajeros", "Galones", "Ruta", "Conductor"}
-        ));
-
-    }
-
-    
 
     public void ingresarEmpleado() {
 
@@ -481,8 +397,6 @@ public class Menu extends javax.swing.JFrame {
 
         verificarEm(id, nombre, cargo);
 
-        
-
         if (c == true) {
             JOptionPane.showConfirmDialog(null, "datos incompletos");
 
@@ -490,18 +404,15 @@ public class Menu extends javax.swing.JFrame {
 
         if (b == false && c == false) {
 
-
-        
             int id1 = Integer.parseInt(id);
             EmpleadosBL em = new EmpleadosBL(id1, nombre, cargo);
-            
+
             em.ingresarEmpleadoBL(em);
-           
-            mostrarTablaEm();
+
+            mostrarempleado();
             txt_id.setText("");
             txtnombre.setText("");
             txt_cargo.setText("");
-           
 
         }
 
@@ -526,8 +437,6 @@ public class Menu extends javax.swing.JFrame {
 
         verificaRu(ciudadOrigen.getText().toString(), ciudadDestino.getText().toString(), hora1, hora2);
 
-
-
         if (x1 == true) {
             JOptionPane.showConfirmDialog(null, "Datos incompletos");
 
@@ -540,17 +449,12 @@ public class Menu extends javax.swing.JFrame {
 
         }
 
-       
         if (x == false && x1 == false && x2 == false) {
 
-
-
             RutaBL ru = new RutaBL(ciudadOrigen.getText(), horasalida, ciudadDestino.getText(), horallegada);
-            
+
             ru.ingresarRutaBL(ru);
-            
-           
-            
+
             ciudadOrigen.setText("");
             ciudadDestino.setText("");
 
@@ -573,15 +477,13 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-    
-    public void mostrarempleado(){
+    public void mostrarempleado() {
         int cont = 0;
         modeloEM.setRowCount(0);
         try {
             EmpleadosBL objEmpleado = new EmpleadosBL();
             conexionBD objConexion = new conexionBD();
             ResultSet resultado = objEmpleado.mostrarDatoEmpleado();
-           
 
             while (resultado.next()) {
 
@@ -593,35 +495,19 @@ public class Menu extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-    
-    
-    
-    
+
     }
-    
-    
-    
+
     public void ingresarFlota() {
-        
-       
-      
-        
-       
-         
+
         String cantidadpasa = txtcantidadPasajeros.getText();
         String cantidadGalones = txtgalones.getText();
         String comboru = comboRuta.getSelectedItem().toString();
         String comboconduc = comboConductor.getSelectedItem().toString();
-        
-        
+
         FlotaBL flo = new FlotaBL(txtplaca.getText(), cantidadpasa, cantidadGalones, comboru, comboconduc);
         flo.ingresarFlotaBL(flo);
-        
-       
-       
-        
-       
-        
+
         txtcantidadPasajeros.setText("");
         txtplaca.setText("");
         txtgalones.setText("");
@@ -1905,26 +1791,26 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         mostrarempleado();
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTableEMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEMMouseClicked
-
+        editarempleado();
     }//GEN-LAST:event_jTableEMMouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+        eliminarempleado();
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-     
+        editarempleado();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1932,40 +1818,35 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-       
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-       
-        
-        
+
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-       
-         
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-       ingresarFlota();
+        ingresarFlota();
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void barraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraMousePressed
         xx = evt.getX();
         yy = evt.getY();
-                
+
     }//GEN-LAST:event_barraMousePressed
 
     private void barraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraMouseDragged
-        this.setLocation(this.getLocation().x+evt.getX()-xx,this.getLocation().y+evt.getY()-yy);
+        this.setLocation(this.getLocation().x + evt.getX() - xx, this.getLocation().y + evt.getY() - yy);
     }//GEN-LAST:event_barraMouseDragged
 
     /**
