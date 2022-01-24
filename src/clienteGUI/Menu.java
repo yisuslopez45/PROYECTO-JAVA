@@ -339,7 +339,48 @@ public class Menu extends javax.swing.JFrame {
         obtempleado.editarDatoEmpleado(nombre, id, cargo);
 
     }
+    
+    void editarFlota(){
+        
+        int fila = jTableFL.getSelectedRow();
+        FlotaBL objFlota = new FlotaBL();
 
+        System.out.println("fila: " + jTableFL.getValueAt(fila, 1));
+        conexionBD objConexion = new conexionBD();
+
+        String placa = String.valueOf(jTableFL.getValueAt(fila, 0));
+
+        String pasajero  = String.valueOf(jTableFL.getValueAt(fila, 1));
+        String galones = String.valueOf(jTableFL.getValueAt(fila, 2));
+        String ruta = String.valueOf(jTableFL.getValueAt(fila, 3));
+        String conductor = String.valueOf(jTableFL.getValueAt(fila, 4));
+        objFlota.editarDatoFlota(placa, pasajero, galones, conductor, ruta);
+
+    
+    }
+
+    void  editarRuta(){
+        
+        int fila = jTableRu.getSelectedRow();
+        RutaBL objRuta = new RutaBL();
+
+        System.out.println("fila: " + jTableRu.getValueAt(fila, 0));
+        conexionBD objConexion = new conexionBD();
+
+        
+         String id = String.valueOf(jTableRu.getValueAt(fila, 0));
+        String ciudad1 = String.valueOf(jTableRu.getValueAt(fila, 1));
+
+        String ciudad2  = String.valueOf(jTableRu.getValueAt(fila, 2));
+        String hora1 = String.valueOf(jTableRu.getValueAt(fila, 3));
+        String hora2 = String.valueOf(jTableRu.getValueAt(fila, 4));
+       
+        objRuta.editarDatoRuta(ciudad1, ciudad2, hora1, hora2, id);
+
+    
+    }
+    
+    
     void mostrarcomboruta() {
 
         String ruta = "";
@@ -379,9 +420,34 @@ public class Menu extends javax.swing.JFrame {
         objempleado.eliminarDatoEmpleado(id);
 
     }
+    
+    void eliminarFlota(){
+        
+        int fila = jTableFL.getSelectedRow();
+        FlotaBL objFlota = new FlotaBL();
+        System.out.println("fila: " + jTableFL.getValueAt(fila, 0));
+        conexionBD objConexion = new conexionBD();
 
+        String placa = String.valueOf(jTableFL.getValueAt(fila, 0));
+        modeloFL.removeRow(fila);
+
+        objFlota.eliminarDatoFloata(placa);
+    }
     
 
+    void eliminarRuta(){
+        
+        int fila = jTableRu.getSelectedRow();
+        RutaBL objRuta = new RutaBL();
+        System.out.println("fila: " + jTableRu.getValueAt(fila, 0));
+        conexionBD objConexion = new conexionBD();
+
+        String id = String.valueOf(jTableRu.getValueAt(fila, 0));
+        modeloRU.removeRow(fila);
+
+        objRuta.eliminarDatoRuta(id);
+    
+    }
   
    
 
@@ -498,6 +564,53 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
+    
+    public void mostrarflota(){
+         int cont = 0;
+        modeloFL.setRowCount(0);
+        try {
+            FlotaBL objFlota= new FlotaBL();
+            conexionBD objConexion = new conexionBD();
+            ResultSet resultado = objFlota.mostrarDatoFlota();
+
+            while (resultado.next()) {
+
+                Object[] objCliente = {resultado.getString("placaBUS"), resultado.getString("pasajeroBUS"), resultado.getString("galonBUS"),resultado.getString("rutaBUS"),resultado.getString("conductorBUS")};
+                modeloFL.addRow(objCliente);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    
+    
+    public void  mostrarRuta(){
+        
+          
+        modeloRU.setRowCount(0);
+        try {
+            RutaBL objRuta= new RutaBL();
+            conexionBD objConexion = new conexionBD();
+            ResultSet resultado = objRuta.mostrarDatoRuta();
+
+            while (resultado.next()) {
+
+                Object[] objCliente = {resultado.getString("idRUT"), resultado.getString("ciudadorigenRUT"), resultado.getString("horasalidadRUT"),resultado.getString("ciudaddestinoRUT"),resultado.getString("horallegadaRUT")};
+                modeloRU.addRow(objCliente);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    
+    
+    }
+    
     public void ingresarFlota() {
 
         String cantidadpasa = txtcantidadPasajeros.getText();
@@ -1083,6 +1196,11 @@ public class Menu extends javax.swing.JFrame {
         jTableFL.setSelectionBackground(new java.awt.Color(129, 128, 138));
         jTableFL.setShowHorizontalLines(false);
         jTableFL.setShowVerticalLines(false);
+        jTableFL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFLMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableFL);
 
         jButton7.setBackground(new java.awt.Color(224, 225, 221));
@@ -1159,12 +1277,17 @@ public class Menu extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Ciudad Origen", "Ciudad Destino", "Hora Salida", "Hora Llegada"
+                "Id Ruta", "Ciudad Origen", "Ciudad Destino", "Hora Salida", "Hora Llegada"
             }
         ));
         jTableRu.setRowHeight(35);
         jTableRu.setSelectionBackground(new java.awt.Color(129, 128, 138));
         jTableRu.setShowVerticalLines(false);
+        jTableRu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableRuMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableRu);
 
         jButton6.setBackground(new java.awt.Color(224, 225, 221));
@@ -1809,29 +1932,29 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        mostrarflota();
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-
+        editarFlota();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-
+        mostrarRuta();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-
+        editarRuta();
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
 
-
+        eliminarFlota();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-
+        eliminarRuta();
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -1848,6 +1971,14 @@ public class Menu extends javax.swing.JFrame {
     private void barraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraMouseDragged
         this.setLocation(this.getLocation().x + evt.getX() - xx, this.getLocation().y + evt.getY() - yy);
     }//GEN-LAST:event_barraMouseDragged
+
+    private void jTableFLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFLMouseClicked
+       editarFlota();
+    }//GEN-LAST:event_jTableFLMouseClicked
+
+    private void jTableRuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableRuMouseClicked
+        editarRuta();
+    }//GEN-LAST:event_jTableRuMouseClicked
 
     /**
      * @param args the command line arguments

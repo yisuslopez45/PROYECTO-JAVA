@@ -109,6 +109,33 @@ public class RutaBL {
         }
     }
     
+      
+      
+     
+     public void editarDatoRuta(String ciudad1, String ciudad2, String hora1, String hora2, String id){
+         conexionBD objConexion = new conexionBD();
+         
+         String datos = String.format("UPDATE ruta SET ciudadorigenRUT='"+ciudad1+"',horasalidadRUT='"+hora1+"',ciudaddestinoRUT='"+ciudad2+"',horallegadaRUT='"+hora2+"' WHERE idRUT='" +id + "'" );
+
+         objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
+    
+    
+     public void eliminarDatoRuta(String id){
+        conexionBD objConexion = new conexionBD();
+        String datos = String.format("DELETE FROM ruta WHERE idRUT='" + id + "' ");
+
+        objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
+    
+    
+    
+      
+      
+      
+      
     
     
 }

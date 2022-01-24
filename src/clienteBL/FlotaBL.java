@@ -6,6 +6,7 @@
 package clienteBL;
 
 import clienteDAL.conexionBD;
+import java.sql.ResultSet;
 
 /**
  *
@@ -19,6 +20,10 @@ public class FlotaBL {
     String asignarRu;
     
 
+    
+    public FlotaBL(){
+    }
+    
     public FlotaBL(String placa, String capacidad, String galones, String asignarRu, String asignarConductor) {
         this.placa = placa;
         this.capacidad = capacidad;
@@ -102,9 +107,39 @@ public class FlotaBL {
     }
         
     
+     public ResultSet mostrarDatoFlota()
+    {
+        
+        
+        conexionBD objConexion = new conexionBD();
+        
+        try {
+            ResultSet resultado = objConexion.consultarDatos("SELECT * FROM bus");
+            return resultado;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+     
+     
+     public void editarDatoFlota(String placa, String pasajero, String galon, String conductor, String ruta){
+         conexionBD objConexion = new conexionBD();
+         
+         String datos = String.format("UPDATE bus SET placaBUS='"+placa+"',pasajeroBUS='"+pasajero+"',galonBUS='"+galon+"',conductorBUS='"+conductor+"',rutaBUS='"+ruta+"' WHERE placaBUS='" + placa + "'" );
+
+         objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
     
     
-    
+     public void eliminarDatoFloata(String placa){
+        conexionBD objConexion = new conexionBD();
+        String datos = String.format("DELETE FROM bus WHERE placaBUS='" + placa + "' ");
+
+        objConexion.ejecutarSentenciaSQL(datos);
+     
+     }
     
     
     
