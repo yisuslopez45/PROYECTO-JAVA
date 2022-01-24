@@ -46,10 +46,7 @@ import javax.swing.table.JTableHeader;
  */
 public class Menu extends javax.swing.JFrame {
 
-    String rutaEm = ("src\\Documento\\datoEm.txt");
-    String rutaRu = ("src\\Documento\\datoRu.txt");
-    String rutaFl = ("src\\Documento\\datoFl.txt");
-
+   
     private DefaultTableModel modeloEM;
     private DefaultTableModel modeloFL;
     private DefaultTableModel modeloRU;
@@ -72,9 +69,6 @@ public class Menu extends javax.swing.JFrame {
     boolean x5 = false; //bandera para no repetir la lectura del txt empleado
     boolean x6 = false; //bamdera para no repetir la lectura del txt flota
 
-    ArrayList<EmpleadosBL> listaEmpleado = new ArrayList<EmpleadosBL>();
-    ArrayList<RutaBL> listaRuta = new ArrayList<RutaBL>();
-    ArrayList<FlotaBL> listaFlota = new ArrayList<FlotaBL>();
 
     public Menu() {
         initComponents();
@@ -172,56 +166,9 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-    public void saveRu1() {
-        try {
-            FileWriter save1 = new FileWriter(rutaRu, true);
-            PrintWriter printtxt1 = new PrintWriter(save1);
+    
 
-            for (int i = 0; i < listaRuta.size(); i++) {
-
-                printtxt1.print(listaRuta.get(i).getCiudadOrigen());
-                printtxt1.write(",");
-                printtxt1.print(listaRuta.get(i).getHoraorigen());
-                printtxt1.write(",");
-                printtxt1.print(listaRuta.get(i).getCiudaddestino());
-                printtxt1.write(",");
-                printtxt1.println(listaRuta.get(i).getHoradestino());
-
-            }
-
-            printtxt1.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void saveRu() {
-        try {
-            FileWriter save1 = new FileWriter(rutaRu, true);
-            PrintWriter printtxt1 = new PrintWriter(save1);
-
-            for (int i = 0; i < listaRuta.size(); i++) {
-                if (i == listaRuta.size() - 1) {
-                    printtxt1.print(listaRuta.get(i).getCiudadOrigen());
-                    printtxt1.write(",");
-                    printtxt1.print(listaRuta.get(i).getHoraorigen());
-                    printtxt1.write(",");
-                    printtxt1.print(listaRuta.get(i).getCiudaddestino());
-                    printtxt1.write(",");
-                    printtxt1.println(listaRuta.get(i).getHoradestino());
-
-                }
-            }
-
-            printtxt1.close();
-
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 
     public boolean ExcepcionesIndex(int num1, int num2) {
         boolean d = false;
@@ -528,20 +475,7 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
-    void EliminarCombo(int combo, String palabra) {
-        switch (combo) {
-            case 0:
-                for (int i = 0; i < listaEmpleado.size(); i++) {
-                    if (palabra.equals(listaEmpleado.get(i).getNombre())) {
-
-                    }
-                }
-
-            case 1:
-
-        }
-
-    }
+    
 
     public void mostrarempleado() {
         int cont = 0;
